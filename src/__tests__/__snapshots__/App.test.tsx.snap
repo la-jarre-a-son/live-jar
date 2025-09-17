@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should render 1`] = `
+<div>
+  <div
+    class="base"
+  >
+    <div
+      class="root root --elevation3 root --relative --top topbar topbar--isMac"
+    >
+      <nav
+        class="root"
+      >
+        <ol>
+          <li>
+            <a
+              aria-label="Live Jar"
+              class="item"
+              data-discover="true"
+              href="#/"
+              role="link"
+              tabindex="0"
+            >
+              <img
+                alt=""
+                height="32"
+                src="test-file-stub"
+                width="32"
+              />
+              <span
+                class="label"
+              >
+                Live Jar
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              aria-current="page"
+              aria-label="Windows"
+              class="item active"
+              data-discover="true"
+              href="#/window"
+              role="link"
+              tabindex="0"
+            >
+              <test-file-stub
+                classname="base base--inherit icon--windows"
+              />
+              <span
+                class="label"
+              >
+                Windows
+              </span>
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <div
+        class="titlebar"
+      />
+      <div
+        class="root --horizontal root --horizontal"
+      >
+        <a
+          aria-label="Settings"
+          aria-pressed="false"
+          class="root --icon --md --filled --neutral"
+          data-discover="true"
+          href="#/settings"
+          type="button"
+        >
+          <test-file-stub
+            classname="base base--inherit icon--settings"
+          />
+        </a>
+        <button
+          aria-label="Always on Top"
+          aria-pressed="false"
+          class="root --icon --md --filled --neutral"
+          type="button"
+        >
+          <test-file-stub
+            classname="base base--inherit icon--pin"
+          />
+        </button>
+        <button
+          aria-label="Quit App"
+          class="root --icon --md --filled --danger --hoverIntent"
+          type="button"
+        >
+          <test-file-stub
+            classname="base base--inherit icon--power"
+          />
+        </button>
+      </div>
+    </div>
+    <div
+      class="modalContainer"
+    >
+      <div
+        class="content"
+      >
+        <div
+          class="base"
+        >
+          <div
+            class="root --xl --center container"
+          >
+            <div
+              class="root --gap-lg col--md"
+            >
+              <a
+                class="root --outlined --elevation1 root --interactive --outlined"
+                data-discover="true"
+                href="#/window/new"
+              >
+                <div
+                  class="thumbnail"
+                >
+                  <div
+                    class="thumbnailWrapper"
+                  >
+                    <img
+                      alt="Stream preview"
+                      class=""
+                    />
+                    <div
+                      class="thumbnailPlaceholder"
+                      role="presentation"
+                    />
+                    <div
+                      class="root --xl --round"
+                    >
+                      <test-file-stub
+                        classname="base base--inherit icon--plus"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="header"
+                >
+                  <div
+                    class="headerContent"
+                  >
+                    Add window
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div />
+    </div>
+  </div>
+</div>
+`;

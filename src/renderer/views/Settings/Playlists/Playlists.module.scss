@@ -1,0 +1,27 @@
+@import 'tokens';
+
+.playlistHeader {
+  padding: $space-sm 0;
+  margin: $space-lg 0;
+
+  border-bottom: 1px solid $color-neutral-lighter;
+}
+
+.playlistTitle {
+  flex-grow: 1;
+  text-transform: uppercase;
+}
+
+.playlistContent {
+  margin-bottom: $space-lg;
+}
+
+.entry {
+
+  --List-item_padding: 0 0 0 #{$space-md};
+}
+.addEntry {
+  --List-item_padding: 0;
+  --List-item_gap: 0;
+}
+

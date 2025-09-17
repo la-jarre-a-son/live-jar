@@ -1,0 +1,109 @@
+@import 'tokens';
+
+.base {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+
+:global {
+  #twitchEmbed {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+.topbar {
+  --Toolbar_gap: 0;
+  --Toolbar_height: #{$size-xs};
+  display: none;
+  opacity: 1;
+
+  transition: opacity $duration-fast ease;
+
+  &.topbar--isMac {
+    padding-left: 72px;
+  }
+
+  &.locked .titlebar {
+    -webkit-app-region: no-drag;
+  }
+}
+
+body.ready .topbar {
+  display: flex;
+}
+
+body.error .topbar {
+  display: flex;
+}
+
+body.inactive .topbar.autoHide {
+  opacity: 0;
+}
+
+.actions {
+  margin-right: $space-md;
+}
+
+.titlebar {
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  margin: 0 $space-sm;
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: $size-xs;
+  line-height: $size-xs;
+  text-transform: uppercase;
+  overflow: hidden;
+  padding-right: 16px; /// Just enough to center
+}
+
+.stats {
+  --Badge_textTransform: none;
+  display: flex;
+  flex-direction: row;
+  gap: $space-sm;
+  align-items: center;
+  width: 100px;
+}
+
+.title {
+  font-weight: bold;
+  height: 100%;
+  padding: 0 16px;
+  background: rgba(0,0,0,0.7);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin: auto;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title.muted {
+  background: #900;
+}
+
+.title.unmuted {
+  background: #090;
+}
+
+
+.latency, .fps {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 4px;
+  margin: 3px;
+  height: 16px;
+  vertical-align: middle;
+  background: rgba(0,0,0,0.4);
+}
+
+.latency.high {
+  background: red;
+}

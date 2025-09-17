@@ -1,0 +1,170 @@
+@import 'ljas-ui-theme';
+
+$Avatar_background: $color-neutral-darker !default;
+$Avatar_color: $color-neutral-lighter !default;
+$Avatar_fontSizeRatio: 0.5 !default;
+
+$Avatar_borderRadius: 0 !default;
+$Avatar_boxShadow: 0 0 transparent !default; // Trick for mixing with other shadows when outlined
+
+$Avatar--outlined_transitionDuration: $duration_fast !default;
+$Avatar--outlined_transitionTimingFunction: ease !default;
+$Avatar-image_transitionDuration: $duration_fast !default;
+$Avatar-image_transitionTimingFunction: ease !default;
+
+$Avatar_outlineWidth: $border-md!default;
+$Avatar_outlineColor: $color-neutral-dark !default;
+
+$Avatar--online_outlineWidth: $border-md!default;
+$Avatar--online_outlineColor: $color-success-normal !default;
+$Avatar--round_borderRadius: 100% !default;
+
+$Avatar_sizes: (
+  'xs': (
+    size: $size-xs,
+    borderRadius: $radius-sm,
+    outlineWidth: $border-md,
+    boxShadow: $Avatar_boxShadow,
+  ),
+  'sm': (
+    size: $size-sm,
+    borderRadius: $radius-sm,
+    outlineWidth: $border-md,
+    boxShadow: $Avatar_boxShadow,
+    textStyle: (xs, regular),
+  ),
+  'md': (
+    size: $size-md,
+    borderRadius: $radius-sm,
+    outlineWidth: $border-md,
+    boxShadow: $Avatar_boxShadow,
+    textStyle: (sm, regular),
+  ),
+  'lg': (
+    size: $size-lg,
+    borderRadius: $radius-sm,
+    outlineWidth: $border-md,
+    boxShadow: $Avatar_boxShadow,
+    textStyle: (md, regular),
+  ),
+  'xl': (
+    size: $size-xl,
+    borderRadius: $radius-sm,
+    outlineWidth: $border-md,
+    boxShadow: $shadow-md,
+    textStyle: (lg, regular),
+  ),
+) !default;
+
+// Defaults
+
+$Avatar_size: map-get($Avatar_sizes, 'md', size) !default;
+$Avatar_textStyle: map-get($Avatar_sizes, 'md', textStyle) !default;
+
+// Mixins
+
+@mixin ljasAvatarSize($size, $map) {
+  --Avatar_size: var(--Avatar--#{$size}_size, #{map-get($map, size)});
+  --Avatar_borderRadius: var(--Avatar--#{$size}_borderRadius, #{map-get($map, borderRadius)});
+  --Avatar_boxShadow: var(--Avatar--#{$size}_boxShadow, #{map-get($map, boxShadow)});
+  --Avatar_outlineWidth: var(--Avatar--#{$size}_outlineWidth, #{map-get($map, outlineWidth)});
+
+  @if (map-has-key($map, textStyle)) {
+    @include _textStyle(--Avatar, --Avatar--#{$size}, map-get($map, textStyle)...);
+  } @else {
+    --Avatar_lineHeight: var(--Avatar_size);
+    --Avatar_fontSize: calc(
+      var(--Avatar_size) * var(--Avatar_fontSizeRatio, #{$Avatar_fontSizeRatio})
+    );
+  }
+}
+
+// Classes
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  position: relative;
+  overflow: hidden;
+
+  background: var(--Avatar_background, $Avatar_background);
+  color: var(--Avatar_color, $Avatar_color);
+  border-radius: var(--Avatar_borderRadius, $Avatar_borderRadius);
+  box-shadow: var(--Avatar_boxShadow, $Avatar_boxShadow);
+
+  height: var(--Avatar_size, $Avatar_size);
+  width: var(--Avatar_size, $Avatar_size);
+  min-height: var(--Avatar_size, $Avatar_size);
+  min-width: var(--Avatar_size, $Avatar_size);
+
+  @include _textStyle(null, --Avatar, $Avatar_textStyle...);
+}
+
+.image {
+  position: absolute;
+  width: 100%;
+  height: auto;
+
+  opacity: 0;
+
+  transition:
+    opacity
+    var(--Avatar-image_transitionDuration, $Avatar-image_transitionDuration)
+    var(--Avatar-image_transitionTimingFunction, $Avatar-image_transitionTimingFunction);
+}
+
+// Interactive
+
+a.root,
+button.root {
+  cursor: pointer;
+
+  @include ljasFocus();
+}
+
+// States
+
+.isLoaded {
+  .image {
+    opacity: 1;
+  }
+}
+
+.skipTransition {
+  .image {
+    transition: none;
+  }
+}
+
+
+// Sizes
+
+@each $size, $value in $Avatar_sizes {
+  .root.--#{$size} {
+    @include ljasAvatarSize($size, $value);
+  }
+}
+
+// Shapes
+
+.--round {
+    border-radius: var(--Avatar--round_borderRadius, $Avatar--round_borderRadius);
+}
+
+.--square {
+    border-radius: var(--Avatar_borderRadius, $Avatar_borderRadius);
+}
+
+.--outlined {
+    box-shadow: 0 0 0 var(--Avatar_outlineWidth, $Avatar_outlineWidth)
+      var(--Avatar_outlineColor, $Avatar_outlineColor),
+      var(--Avatar_boxShadow, $Avatar_boxShadow);
+}
+
+.--online {
+  box-shadow: 0 0 0 var(--Avatar--online_outlineWidth, $Avatar--online_outlineWidth)
+    var(--Avatar--online_outlineColor, $Avatar--online_outlineColor),
+    var(--Avatar_boxShadow, $Avatar_boxShadow);
+}

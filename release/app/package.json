@@ -1,0 +1,18 @@
+{
+  "name": "live-jar",
+  "version": "1.0.0",
+  "description": "A multi-stream application to watch simultaneously many streams on different screens.",
+  "license": "MIT",
+  "author": {
+    "name": "Rémi Jarasson",
+    "email": "contact+livejar@ljas.fr",
+    "url": "https://live-jar.ljas.fr"
+  },
+  "main": "./dist/main/main.js",
+  "scripts": {
+    "rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
+    "postinstall": "npm run rebuild && npm run link-modules",
+    "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
+  },
+  "dependencies": {}
+}

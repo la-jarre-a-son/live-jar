@@ -1,0 +1,45 @@
+@import 'tokens';
+
+.chat {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.chat-list {
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  width: 240px;
+}
+
+.chat-filters {
+  margin: 0;
+  background: rgba(0, 0, 0, 0.3);
+  padding: $space-sm;
+}
+
+.chat-item {
+  display: block;
+  color: white;
+  padding: 8px;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.chat-item.active {
+  background: rgba(255,255,255, 0.25);
+  font-weight: bold;
+}
+
+.chat-content {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.chat-frame {
+  background: #413960;
+  border: none;
+}

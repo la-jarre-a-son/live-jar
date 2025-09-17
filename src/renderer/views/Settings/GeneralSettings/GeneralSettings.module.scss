@@ -1,0 +1,17 @@
+@import 'tokens';
+
+.userDisplayName {
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.twitch {
+  --Button--filled--primary_background: #9146FF #{$gradient-interactive};
+  --Button--filled--primary--hover_background: #{lighten(#9146FF, 10%) $gradient-interactive};
+  --Button--filled--primary--active_background: #{darken(#9146FF, 10%) $gradient-interactive};
+}
+
+.twitchIcon {
+  color: #9146FF;
+  font-size: 1.5em;
+}

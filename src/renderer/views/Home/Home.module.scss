@@ -1,0 +1,92 @@
+@import 'tokens';
+
+.base {
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(at 94.12393162393163% 0%,
+  #876945 0px,
+  transparent 50%),
+  radial-gradient(at 91.88034188034187% 90.17245417361714%,
+  #6D5996 0px,
+  transparent 50%),
+  radial-gradient(at 17.52136752136752% 85.28008636494344%,
+  #5B3E5C 0px,
+  transparent 50%),
+  radial-gradient(at 41.34615384615385% 60.00285268679599%,
+  #7D486D 0px,
+  transparent 50%),
+  radial-gradient(at 38.35470085470086% 38.47643432863171%,
+  #4E3F66 0px,
+  transparent 50%) #413960;
+  backdrop-filter: blur(40px) contrast(100%) brightness(100%);
+  -webkit-backdrop-filter: blur(40px) contrast(100%) brightness(100%);
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: $space-lg;
+}
+
+.window {
+  --Card-thumbnail_aspectRatio: 16/9;
+  --Card-thumbnail_padding: #{$space-md};
+
+  &.--enabled {
+    .channelName,
+    .windowThumbnailImage {
+      opacity: 1.0;
+      filter: none;
+    }
+
+    .windowLabel {
+      opacity: 1.0
+    }
+
+  }
+}
+
+.channelName,
+.windowThumbnailImage {
+  opacity: 0.4;
+  filter: grayscale(1.0);
+}
+
+.windowLabel {
+  opacity: 0.5;
+}
+
+.streamStatus {
+  --Card-thumbnail_padding: 0;
+  background: rgba($color-black, 0.5);
+  padding: $space-sm;
+  line-height: 1em;
+  text-align: center;
+  left: 0;
+  right: 0;
+}
+
+.streamTitle {
+
+  margin:  $space-sm;
+}
+
+.channelName {
+  text-shadow: 0 0 4px rgba($color-black, 1.0);
+  pointer-events: none;
+}
+
+.menuItemDelete {
+  color: $color-danger-normal;
+}
+
+.playlists {
+  width: $container-xs;
+  max-height: calc(80vh);
+}
