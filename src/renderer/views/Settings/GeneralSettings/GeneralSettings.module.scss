@@ -7,8 +7,8 @@
 
 .twitch {
   --Button--filled--primary_background: #9146FF #{$gradient-interactive};
-  --Button--filled--primary--hover_background: #{lighten(#9146FF, 10%) $gradient-interactive};
-  --Button--filled--primary--active_background: #{darken(#9146FF, 10%) $gradient-interactive};
+  --Button--filled--primary--hover_background: #af79ff #{$gradient-interactive};
+  --Button--filled--primary--active_background: #7313ff #{$gradient-interactive};
 }
 
 .twitchIcon {

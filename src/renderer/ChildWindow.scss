@@ -1,33 +1,35 @@
 $ljas-ui-asset-path: 'assets';
 $font-path: '../assets/fonts';
 
+@import "@flaticon/flaticon-uicons/css/regular/rounded.css";
+@import "@flaticon/flaticon-uicons/css/brands/all.css";
+
 @import '@la-jarre-a-son/ui/lib/theme/jar/tokens';
 @import '@la-jarre-a-son/ui/lib/style/normalize';
 @import '@la-jarre-a-son/ui/lib/theme/jar/global';
 @import '@la-jarre-a-son/ui/lib/theme/jar/fonts';
 @import '@la-jarre-a-son/ui/lib/theme/jar/dark';
 
-:global {
-  body {
-    position: relative;
-    color: white;
-    background: black;
-    font-family: sans-serif;
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    user-select: none;
-  }
 
-  #root {
-    width: 100%;
-    height: 100%;
-  }
+body {
+  position: relative;
+  color: white;
+  background: black;
+  font-family: sans-serif;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+}
 
-  iframe {
-    margin: 0;
-    padding: 0;
-    vertical-align: top;
-  }
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+iframe {
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
 }

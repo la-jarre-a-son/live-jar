@@ -6,10 +6,10 @@ import {
   Route,
 } from 'react-router-dom';
 
+import { Icon } from '@la-jarre-a-son/ui';
+
 import packageJSON from '../../package.json';
 import icon from '../../assets/icon.svg';
-
-import { Icon } from './components';
 
 import settingsRoutes from './views/Settings';
 import Layout from './views/Layout';
@@ -31,7 +31,7 @@ const router = createHashRouter(
         path="window"
         handle={{
           title: 'Windows',
-          icon: <Icon name="windows" />,
+          icon: <Icon name="fi fi-rr-window-restore" />,
         }}
         element={<Home />}
       >
@@ -48,7 +48,7 @@ const router = createHashRouter(
         path="chat"
         handle={{
           title: 'Chat',
-          icon: <Icon name="comments" />,
+          icon: <Icon name="fi fi-rr-comments" />,
         }}
         element={<Chat />}
       >

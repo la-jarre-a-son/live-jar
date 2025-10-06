@@ -52,7 +52,7 @@
   }
 }
 
-.channelName,
+.channelName img,
 .windowThumbnailImage {
   opacity: 0.4;
   filter: grayscale(1.0);
@@ -73,7 +73,6 @@
 }
 
 .streamTitle {
-
   margin:  $space-sm;
 }
 

@@ -1,28 +1,31 @@
 import classnames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import Marquee from 'react-fast-marquee';
+import { NavLink, Outlet } from 'react-router-dom';
 
 import {
-  Grid,
+  Avatar,
+  Badge,
+  Button,
   Card,
   CardThumbnail,
   CardThumbnailOverlay,
   CardThumbnailItem,
   CardHeader,
   Container,
-  Badge,
+  Icon,
+  Grid,
   Stack,
-  Button,
 } from '@la-jarre-a-son/ui';
 
-import { Avatar, Icon, NavButton } from 'renderer/components';
+import { NavButton } from 'renderer/components';
 
 import { MappedChannels, useApiTwitch } from 'renderer/contexts/ApiTwitch';
-
 import { useSettings } from 'renderer/contexts/Settings';
-import { NavLink, Outlet } from 'react-router-dom';
-import styles from './Home.module.scss';
+
 import StreamMenu from './StreamMenu';
+
+import styles from './Home.module.scss';
 
 const cx = classnames.bind(styles);
 
@@ -69,7 +72,7 @@ export function Home() {
               key={`${w.id}`}
               className={cx('window', { '--enabled': w.state?.enabled })}
               outlined
-              elevation={2}
+              elevation={w.state?.enabled ? 3 : 2}
             >
               {w.type === 'twitch' && (
                 <CardThumbnail
@@ -108,6 +111,7 @@ export function Home() {
                               : w.id
                           }`}
                           outlined
+                          shape="round"
                           online={
                             !!w.channel &&
                             channels[w.channel] &&
@@ -129,7 +133,7 @@ export function Home() {
                       intent="neutral"
                       to={`/chat/${w.channel}`}
                     >
-                      <Icon name="comments" />
+                      <Icon name="fi fi-rr-comments" />
                     </NavButton>
                   </CardThumbnailItem>
                   {w.channel && channels[w.channel] ? (
@@ -164,7 +168,7 @@ export function Home() {
                         variant="ghost"
                         intent="neutral"
                       >
-                        <Icon name="menu-dots" />
+                        <Icon name="fi fi-rr-menu-dots" />
                       </Button>
                     }
                     windowSettings={w}
@@ -184,7 +188,7 @@ export function Home() {
           >
             <CardThumbnail alt="Stream preview">
               <Avatar size="xl">
-                <Icon name="plus" />
+                <Icon name="fi fi-rr-plus" />
               </Avatar>
             </CardThumbnail>
             <CardHeader>Add window</CardHeader>

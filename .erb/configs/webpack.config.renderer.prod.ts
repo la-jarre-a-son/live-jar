@@ -49,25 +49,22 @@ const configuration: webpack.Configuration = {
             loader: 'css-loader',
             options: {
               modules: {
+                auto: true,
                 namedExport: false,
                 exportLocalsConvention: 'as-is',
                 localIdentRegExp: /[/\\]([^/\\]+?)(?:\.module)?\.[^./\\]+$/,
                 localIdentName: '[hash:base64:8]',
               },
               sourceMap: true,
-              importLoaders: 1,
             },
           },
           'resolve-url-loader',
           {
             loader: 'sass-loader',
             options: {
+              sourceMap: true,
               sassOptions: {
-                silenceDeprecations: [
-                  'import',
-                  'color-functions',
-                  'global-builtin',
-                ], // FIXME: migrate to @use and color in ljas/ui
+                silenceDeprecations: ['import'], // FIXME: migrate to @use
                 loadPaths: [
                   webpackPaths.srcStylePath,
                   webpackPaths.ljasUiThemePath,

@@ -5,16 +5,14 @@ import {
   Button,
   Badge,
   Box,
-  ListItem,
   Collapse,
-  List,
   Divider,
+  Icon,
+  List,
+  ListItem,
   Stack,
   StackSeparator,
 } from '@la-jarre-a-son/ui';
-
-import { Icon } from 'renderer/components';
-
 // eslint-disable-next-line
 import ThirdPartyLicenses from '../../../../../ThirdPartyLicenses.json';
 
@@ -50,7 +48,7 @@ const Licenses: React.FC = () => {
   return (
     <Box as={List}>
       {(ThirdPartyLicenses as Package[]).map((p: Package, i) => (
-        <Fragment key={p.name}>
+        <Fragment key={`${p.name}@${p.version}`}>
           {i > 0 && <Divider />}
           <ListItem
             interactive
@@ -67,16 +65,16 @@ const Licenses: React.FC = () => {
                     onClick={stopPropagation}
                     rel="noreferrer"
                     size="sm"
-                    left={<Icon name="github" />}
+                    left={<Icon name="fi fi-brands-github" />}
                   >
                     Github
                   </Button>
                 )}
                 <span className={cx('itemHandle')}>
                   {open === p.name ? (
-                    <Icon name="angle-up" />
+                    <Icon name="fi fi-rr-angle-up" />
                   ) : (
-                    <Icon name="angle-down" />
+                    <Icon name="fi fi-rr-angle-down" />
                   )}
                 </span>
               </>

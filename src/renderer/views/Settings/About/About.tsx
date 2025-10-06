@@ -1,10 +1,9 @@
 import React from 'react';
 import classnames from 'classnames/bind';
 
-import { Badge, Button, Container, Link } from '@la-jarre-a-son/ui';
+import { Badge, Button, Container, Icon, Link } from '@la-jarre-a-son/ui';
 
 import logo from 'renderer/assets/logo.svg';
-import { Icon } from 'renderer/components';
 
 import Credits from './Credits';
 import { CREDIT_ITEMS } from './constants';
@@ -45,7 +44,7 @@ const About: React.FC = () => (
           rel="noreferrer"
           href="https://github.com/la-jarre-a-son/live-jar/issues/new?labels=bug&template=1-Bug_report.md"
         >
-          <Icon name="github" />
+          <Icon name="fi fi-brands-github" />
           Report a bug
         </Button>
         {' or '}
@@ -57,7 +56,7 @@ const About: React.FC = () => (
           rel="noreferrer"
           href="https://github.com/la-jarre-a-son/live-jar/issues/new?labels=enhancement&template=2-Feature_request.md"
         >
-          <Icon name="github" />
+          <Icon name="fi fi-brands-github" />
           Request a feature
         </Button>
       </p>

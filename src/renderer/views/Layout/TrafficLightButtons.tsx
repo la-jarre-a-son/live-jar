@@ -1,16 +1,11 @@
 import React from 'react';
 
-import { Button, ButtonGroup } from '@la-jarre-a-son/ui';
-import { Icon } from 'renderer/components';
+import { Button, ButtonGroup, Icon } from '@la-jarre-a-son/ui';
 
 import { useWindowState } from 'renderer/contexts/WindowState';
 
 type Props = {
   className?: string;
-};
-
-const defaultProps = {
-  className: undefined,
 };
 
 const TrafficLightButtons: React.FC<Props> = ({ className }) => {
@@ -32,7 +27,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
         hoverIntent
         icon
       >
-        <Icon name="minimize" />
+        <Icon name="fi fi-rr-window-minimize" />
       </Button>
       {windowState.maximized ? (
         <Button
@@ -42,7 +37,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
           hoverIntent
           icon
         >
-          <Icon name="unmaximize" />
+          <Icon name="fi fi-rr-down-left-and-up-right-to-center" />
         </Button>
       ) : (
         <Button
@@ -52,7 +47,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
           hoverIntent
           icon
         >
-          <Icon name="maximize" />
+          <Icon name="fi fi-rr-arrow-up-right-and-arrow-down-left-from-center" />
         </Button>
       )}
       <Button
@@ -62,12 +57,10 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
         hoverIntent
         icon
       >
-        <Icon name="cross" />
+        <Icon name="fi fi-rr-cross" />
       </Button>
     </ButtonGroup>
   );
 };
-
-TrafficLightButtons.defaultProps = defaultProps;
 
 export default TrafficLightButtons;

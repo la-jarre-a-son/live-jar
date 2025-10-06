@@ -92,7 +92,9 @@ const StreamMenu: React.FC<Props> = ({ trigger, windowSettings }) => {
       {windowSettings.state?.enabled && switchChannels.length > 0 ? (
         <SubMenu text="Switch With">
           {switchChannels.map((w) => (
-            <MenuItem onClick={() => switchWith(w.id)}>{w.label}</MenuItem>
+            <MenuItem key={w.id} onClick={() => switchWith(w.id)}>
+              {w.label}
+            </MenuItem>
           ))}
         </SubMenu>
       ) : null}
@@ -104,9 +106,10 @@ const StreamMenu: React.FC<Props> = ({ trigger, windowSettings }) => {
         <TreeView aria-label="playlists" className={cx('playlists')}>
           {settings.playlists.map((p) =>
             p.type === 'twitch' ? (
-              <TreeViewItem title={p.label}>
+              <TreeViewItem key={`${p.label}_${p.type}`} title={p.label}>
                 {p.entries.map((e) => (
                   <TreeViewItem
+                    key={e}
                     as={MenuItem}
                     title={e}
                     onClick={() => setChannel(e)}

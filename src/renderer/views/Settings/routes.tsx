@@ -1,6 +1,6 @@
 import { Route, Navigate } from 'react-router-dom';
 
-import { Icon } from 'renderer/components';
+import { Icon } from '@la-jarre-a-son/ui';
 
 import SettingsLayout from './Layout';
 
@@ -12,7 +12,7 @@ import Licenses from './Licenses';
 const settingsRoutes = () => (
   <Route
     path="settings"
-    handle={{ title: 'Settings', icon: <Icon name="settings" /> }}
+    handle={{ title: 'Settings', icon: <Icon name="fi fi-rr-settings" /> }}
     element={<SettingsLayout />}
   >
     <Route index element={<Navigate to="general" replace />} />

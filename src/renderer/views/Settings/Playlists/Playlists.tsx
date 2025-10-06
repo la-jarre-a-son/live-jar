@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   Container,
   FormField,
+  Icon,
   Input,
   List,
   ListItem,
@@ -25,7 +26,6 @@ import {
 import { ChannelPlaylistType } from 'main/types';
 
 import { useSettings } from 'renderer/contexts/Settings';
-import { Icon } from 'renderer/components';
 
 import styles from './Playlists.module.scss';
 
@@ -102,7 +102,7 @@ const Playlists: React.FC = () => {
                   onClick={() => deletePlaylist(playlist.label, playlist.type)}
                   size="sm"
                   intent="danger"
-                  left={<Icon name="trash" />}
+                  left={<Icon name="fi fi-rr-trash" />}
                 >
                   Remove
                 </Button>
@@ -124,7 +124,7 @@ const Playlists: React.FC = () => {
                             icon
                             aria-label="Remove entry"
                           >
-                            <Icon name="trash" />
+                            <Icon name="fi fi-rr-trash" />
                           </Button>
                         </ButtonGroup>
                       }
@@ -145,7 +145,7 @@ const Playlists: React.FC = () => {
                           icon
                           aria-label="Add entry"
                         >
-                          <Icon name="plus" />
+                          <Icon name="fi fi-rr-plus" />
                         </Button>
                       </ButtonGroup>
                     }

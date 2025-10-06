@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { HelixPrivilegedUser } from '@twurple/api';
+
 import { defaults } from 'main/store/defaults';
 import { useSettings } from 'renderer/contexts/Settings';
 import classnames from 'classnames/bind';
 
 import {
+  Avatar,
   Badge,
   Button,
   Container,
   FormControlLabel,
   FormField,
   FormFieldset,
+  Icon,
   Modal,
   ModalActions,
   ModalActionsSeparator,
@@ -20,9 +24,8 @@ import {
   StateButton,
   Switch,
 } from '@la-jarre-a-son/ui';
+
 import { useApiTwitch } from 'renderer/contexts/ApiTwitch';
-import { HelixPrivilegedUser } from '@twurple/api';
-import { Icon, Avatar } from 'renderer/components';
 import { fields } from './constants';
 
 import styles from './GeneralSettings.module.scss';
@@ -79,7 +82,11 @@ const GeneralSettings: React.FC = () => {
       <FormFieldset label="Authentication">
         {authenticatedUser ? (
           <Stack align="center" gap="md" block>
-            <Icon className={cx('twitchIcon')} name="twitch" intent="inherit" />
+            <Icon
+              className={cx('twitchIcon')}
+              name="fi fi-brands-twitch"
+              intent="inherit"
+            />
             <Avatar
               size="md"
               alt="Profile Picture"
@@ -102,7 +109,7 @@ const GeneralSettings: React.FC = () => {
             className={cx('twitch')}
             onClick={loginTwitch}
             loading={authLoading}
-            left={<Icon name="twitch" />}
+            left={<Icon name="fi fi-brands-twitch" />}
             block
           >
             Login

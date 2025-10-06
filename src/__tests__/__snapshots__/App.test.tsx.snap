@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`App should render 1`] = `
 <div>
@@ -9,7 +9,7 @@ exports[`App should render 1`] = `
       class="root root --elevation3 root --relative --top topbar topbar--isMac"
     >
       <nav
-        class="root"
+        class="root --chevron"
       >
         <ol>
           <li>
@@ -44,8 +44,10 @@ exports[`App should render 1`] = `
               role="link"
               tabindex="0"
             >
-              <test-file-stub
-                classname="base base--inherit icon--windows"
+              <i
+                aria-hidden="true"
+                class="root --inherit --auto fi fi-rr-window-restore"
+                role="img"
               />
               <span
                 class="label"
@@ -68,10 +70,11 @@ exports[`App should render 1`] = `
           class="root --icon --md --filled --neutral"
           data-discover="true"
           href="#/settings"
-          type="button"
         >
-          <test-file-stub
-            classname="base base--inherit icon--settings"
+          <i
+            aria-hidden="true"
+            class="root --inherit --auto fi fi-rr-settings"
+            role="img"
           />
         </a>
         <button
@@ -80,8 +83,10 @@ exports[`App should render 1`] = `
           class="root --icon --md --filled --neutral"
           type="button"
         >
-          <test-file-stub
-            classname="base base--inherit icon--pin"
+          <i
+            aria-hidden="true"
+            class="root --inherit --auto fi fi-rr-thumbtack"
+            role="img"
           />
         </button>
         <button
@@ -89,8 +94,10 @@ exports[`App should render 1`] = `
           class="root --icon --md --filled --danger --hoverIntent"
           type="button"
         >
-          <test-file-stub
-            classname="base base--inherit icon--power"
+          <i
+            aria-hidden="true"
+            class="root --inherit --auto fi fi-rr-power"
+            role="img"
           />
         </button>
       </div>
@@ -123,17 +130,19 @@ exports[`App should render 1`] = `
                   >
                     <img
                       alt="Stream preview"
-                      class=""
+                      class="thumbnailImage"
                     />
                     <div
                       class="thumbnailPlaceholder"
                       role="presentation"
                     />
                     <div
-                      class="root --xl --round"
+                      class="root --xl"
                     >
-                      <test-file-stub
-                        classname="base base--inherit icon--plus"
+                      <i
+                        aria-hidden="true"
+                        class="root --inherit --auto fi fi-rr-plus"
+                        role="img"
                       />
                     </div>
                   </div>

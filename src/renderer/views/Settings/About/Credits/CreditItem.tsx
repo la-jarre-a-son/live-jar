@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
-import { Link, ListItem } from '@la-jarre-a-son/ui';
-import { Icon } from 'renderer/components';
+
+import { Icon, Link, ListItem } from '@la-jarre-a-son/ui';
 
 import { CreditItemProps } from './types';
 
@@ -20,7 +20,7 @@ const CreditItem: React.FC<CreditItemProps> = ({
     <td className={cx('links')}>
       {links.github && (
         <Link href={links.github} target="_blank" rel="noreferrer">
-          <Icon name="github" /> Github
+          <Icon name="fi fi-rr-github" /> Github
         </Link>
       )}
       {links.github && links.website && ' - '}

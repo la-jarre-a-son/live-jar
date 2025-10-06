@@ -4,13 +4,14 @@ import classnames from 'classnames/bind';
 import {
   Button,
   ButtonGroup,
+  Icon,
   Stack,
   ToggleButton,
   Toolbar,
 } from '@la-jarre-a-son/ui';
 
 import { useWindowState } from 'renderer/contexts/WindowState';
-import { NavButton, Icon } from 'renderer/components';
+import { NavButton } from 'renderer/components';
 
 import AppBreadcrumb from './AppBreadcrumb';
 import TrafficLightButtons from './TrafficLightButtons';
@@ -36,7 +37,7 @@ const TopBar: React.FC = () => {
       <div className={cx('titlebar')} onDoubleClick={titleBarDoubleClick} />
       <ButtonGroup>
         <NavButton to="/settings" aria-label="Settings" icon>
-          <Icon name="settings" />
+          <Icon name="fi fi-rr-settings" />
         </NavButton>
         <ToggleButton
           selectedIntent="warning"
@@ -45,7 +46,7 @@ const TopBar: React.FC = () => {
           aria-label="Always on Top"
           icon
         >
-          <Icon name="pin" />
+          <Icon name="fi fi-rr-thumbtack" />
         </ToggleButton>
         <Button
           aria-label="Quit App"
@@ -54,7 +55,7 @@ const TopBar: React.FC = () => {
           icon
           hoverIntent
         >
-          <Icon name="power" />
+          <Icon name="fi fi-rr-power" />
         </Button>
       </ButtonGroup>
       {window.os?.isWindows && (

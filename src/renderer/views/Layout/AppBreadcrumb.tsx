@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import classnames from 'classnames/bind';
-import { Breadcrumb, BreadcrumbItem } from '@la-jarre-a-son/ui';
+
+import { Breadcrumb, BreadcrumbItem, Icon } from '@la-jarre-a-son/ui';
 
 import { NavLink, Params, useMatches } from 'react-router-dom';
 
-import { Icon } from 'renderer/components';
 import styles from './Layout.module.scss';
 
 type CallableTitle = (params: Params) => string;
@@ -51,7 +51,7 @@ const AppBreadcrumb: React.FC = () => {
               to={`${path}/settings`}
               aria-label="Settings"
             >
-              <Icon name="settings" />
+              <Icon name="fi fi-rr-settings" />
             </BreadcrumbItem>
           )}
         </Fragment>

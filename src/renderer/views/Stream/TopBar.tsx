@@ -5,13 +5,13 @@ import {
   Badge,
   Button,
   ButtonGroup,
+  Icon,
   Stack,
   ToggleButton,
   Toolbar,
 } from '@la-jarre-a-son/ui';
 
 import { useWindowState } from 'renderer/contexts/WindowState';
-import { Icon } from 'renderer/components';
 
 import { useStreamStats } from 'renderer/contexts/StreamStats';
 import { StreamWindow } from 'main/types';
@@ -128,7 +128,7 @@ const TopBar: React.FC<Props> = ({ topbarStyle, windowSettings }) => {
           aria-label="Always on Top"
           icon
         >
-          <Icon name="pin" />
+          <Icon name="fi fi-rr-thumbtack" />
         </ToggleButton>
         <Button
           size="sm"
@@ -138,7 +138,7 @@ const TopBar: React.FC<Props> = ({ topbarStyle, windowSettings }) => {
           icon
           hoverIntent
         >
-          <Icon name="refresh" />
+          <Icon name="fi fi-rr-refresh" />
         </Button>
       </ButtonGroup>
       {window.os?.isWindows && !windowState.locked && (
@@ -147,7 +147,7 @@ const TopBar: React.FC<Props> = ({ topbarStyle, windowSettings }) => {
           windowId={windowSettings.id}
         />
       )}
-      {windowState.locked && <Icon name="lock" />}
+      {windowState.locked && <Icon name="fi fi-rr-lock" />}
     </Toolbar>
   );
 };
