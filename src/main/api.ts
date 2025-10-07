@@ -41,6 +41,7 @@ import {
   switchStreams,
   getOpenWindowIds,
 } from './window';
+import { checkUpdates, dismissChangelog, dismissUpdate } from './appState';
 
 function sendToAll(channel: string, ...args: unknown[]) {
   const windows = BrowserWindow.getAllWindows();
@@ -277,4 +278,25 @@ onSettingsChange((settings?: Settings) => {
   if (settings) {
     sendToAll('app:settings', settings);
   }
+});
+
+ipcMain.on('app:settings:dismissUpdate', (event, version: string) => {
+  dismissUpdate(version);
+});
+
+ipcMain.on('app:settings:dismissChangelog', () => {
+  dismissChangelog();
+});
+
+ipcMain.on('app:settings:checkUpdates', (event) => {
+  const settings = getSettings();
+
+  const updateDismissed = settings.appState?.updateDismissed ?? null;
+  checkUpdates(updateDismissed)
+    .then((updateInfo) => {
+      if (updateInfo) {
+        event.reply('app:settings:updateInfo', updateInfo);
+      }
+    })
+    .catch(() => {});
 });

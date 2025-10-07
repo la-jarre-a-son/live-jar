@@ -1,6 +1,7 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { UpdateInfo } from 'electron-updater';
 import {
   ChannelPlaylistType,
   Settings,
@@ -37,6 +38,12 @@ export const AppApi = {
       ipcRenderer.invoke('app:settings:updateSettings', value),
     onSettingsChange: (callback: (settings: Settings) => void) =>
       registerListener('app:settings')(callback),
+    checkUpdates: () => ipcRenderer.send('app:settings:checkUpdates'),
+    dismissUpdate: (version: string) =>
+      ipcRenderer.send('app:settings:dismissUpdate', version),
+    dismissChangelog: () => ipcRenderer.send('app:settings:dismissChangelog'),
+    onUpdateInfo: (callback: (info: UpdateInfo) => void) =>
+      registerListener('app:settings:updateInfo')(callback),
   },
   stream: {
     list: () => ipcRenderer.invoke('app:stream:list'),

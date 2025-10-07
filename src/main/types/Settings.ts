@@ -65,10 +65,16 @@ export type AuthSettings = {
 
 export type AuthProvider = keyof AuthSettings;
 
+export type AppState = {
+  changelogDismissed: string | null;
+  updateDismissed: string | null;
+};
+
 export type Settings = {
   auth: AuthSettings;
   general: GeneralSettings;
   windows: StreamWindow[];
   playlists: ChannelPlaylist[];
   windowState: WindowState;
+  appState: AppState;
 };

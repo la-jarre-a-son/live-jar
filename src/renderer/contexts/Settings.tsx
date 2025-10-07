@@ -9,6 +9,7 @@ import React, {
 import { ChannelPlaylistType, Settings } from 'main/types/Settings';
 import { defaults } from 'main/store/defaults';
 import { mergeDeep } from 'renderer/helpers';
+import { UpdateInfo } from 'electron-updater';
 
 interface SettingsContextInterface {
   settings: Settings;
@@ -20,6 +21,9 @@ interface SettingsContextInterface {
     type: ChannelPlaylistType,
     entries: string[],
   ) => Promise<unknown>;
+  updateInfo: UpdateInfo | null;
+  dismissChangelog: () => void;
+  dismissUpdate: (version: string) => void;
 }
 
 const SettingsContext = React.createContext<SettingsContextInterface | null>(
@@ -32,6 +36,8 @@ type Props = {
 
 const SettingsProvider: React.FC<Props> = ({ children }) => {
   const [settings, setSettings] = useState<Settings>(defaults.settings);
+  const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null);
+
   const [inited, setInited] = useState<boolean>(false);
 
   const onSettingsChange = useCallback(
@@ -65,19 +71,36 @@ const SettingsProvider: React.FC<Props> = ({ children }) => {
     [],
   );
 
+  const onUpdateInfo = useCallback((info: UpdateInfo) => {
+    setUpdateInfo(info);
+  }, []);
+
+  const dismissChangelog = useCallback(
+    () => window.app.settings.dismissChangelog(),
+    [],
+  );
+  const dismissUpdate = useCallback(
+    (version: string) => window.app.settings.dismissUpdate(version),
+    [],
+  );
+
   useEffect(() => {
     window.app.settings
       .getSettings()
       .then(onSettingsChange)
       .catch(() => {});
 
+    window.app.settings.checkUpdates();
+
+    const offUpdateInfo = window.app.settings.onUpdateInfo(onUpdateInfo);
     const offSettingsChange =
       window.app.settings.onSettingsChange(onSettingsChange);
 
     return () => {
       offSettingsChange();
+      offUpdateInfo();
     };
-  }, [onSettingsChange]);
+  }, [onSettingsChange, onUpdateInfo]);
 
   const value = useMemo(
     () => ({
@@ -86,8 +109,20 @@ const SettingsProvider: React.FC<Props> = ({ children }) => {
       updateSettings,
       resetSettings,
       updatePlaylist,
+      updateInfo,
+      dismissChangelog,
+      dismissUpdate,
     }),
-    [settings, updateSetting, updateSettings, resetSettings, updatePlaylist],
+    [
+      settings,
+      updateSetting,
+      updateSettings,
+      resetSettings,
+      updatePlaylist,
+      updateInfo,
+      dismissChangelog,
+      dismissUpdate,
+    ],
   );
 
   return (
@@ -96,6 +131,7 @@ const SettingsProvider: React.FC<Props> = ({ children }) => {
     </SettingsContext.Provider>
   );
 };
+
 export const useSettings = () => {
   const context = useContext(SettingsContext);
   if (!context) {

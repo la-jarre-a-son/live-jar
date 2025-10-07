@@ -24,5 +24,9 @@ export const defaults: StoreType = {
       maximized: false,
       alwaysOnTop: false,
     },
+    appState: {
+      changelogDismissed: '100.0.0', // hack: ensure changelog does not blink at startup
+      updateDismissed: null,
+    },
   },
 };

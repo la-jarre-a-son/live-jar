@@ -19,6 +19,10 @@ window.app = {
     updateSetting: jest.fn(),
     updateSettings: jest.fn(),
     onSettingsChange: jest.fn().mockReturnValue(jest.fn()),
+    dismissChangelog: jest.fn(),
+    dismissUpdate: jest.fn(),
+    onUpdateInfo: jest.fn().mockReturnValue(jest.fn()),
+    checkUpdates: jest.fn(),
   },
   stream: {
     list: jest.fn(),

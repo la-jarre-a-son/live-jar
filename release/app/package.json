@@ -1,6 +1,6 @@
 {
   "name": "live-jar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A multi-stream application to watch simultaneously many streams on different screens.",
   "license": "MIT",
   "author": {
