@@ -173,11 +173,13 @@ export function bindMainWindowEvents(window: BrowserWindow) {
     setAlwaysOnTop(isAlwaysOnTop);
   });
 
-  onMainWindowStateChange((state?: WindowState) => {
+  const unbindStateChange = onMainWindowStateChange((state?: WindowState) => {
     if (state && window) {
       window.webContents.send('app:window:state', state);
     }
   });
+
+  window.on('closed', unbindStateChange);
 }
 
 /* General */
