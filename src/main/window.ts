@@ -99,6 +99,7 @@ export function updateWindow(id: number, data: Partial<StreamWindow>): void {
     newWindow.type === 'twitch' &&
     (data as Partial<TwitchStreamWindow>).channel
   ) {
+    newWindow.channel = newWindow.channel?.toLowerCase();
     addToPlaylist(
       'recent',
       'twitch',
@@ -416,16 +417,19 @@ export const addStream = (window: Partial<StreamWindow>) => {
   const id = getNextWindowId();
 
   if (window.type === 'twitch') {
+    const channel =
+      window.channel?.toLowerCase() ?? DEFAULT_TWITCH_WINDOW.channel;
     const newWindow: TwitchStreamWindow = {
       ...DEFAULT_TWITCH_WINDOW,
       id,
       ...window,
+      channel,
     };
 
     if (newWindow.channel) {
-      addToPlaylist('recent', 'twitch', newWindow.channel);
+      addToPlaylist('recent', 'twitch', channel);
       newWindow.url = `https://player.twitch.tv/?channel=${
-        newWindow.channel
+        channel
       }&parent=localhost`;
     }
 

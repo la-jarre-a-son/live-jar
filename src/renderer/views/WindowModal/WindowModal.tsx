@@ -29,12 +29,16 @@ const WindowModal: React.FC = () => {
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const handleChannelChange = (value: string) => {
+    setChannel(value.toLowerCase());
+  };
+
   const handleCancel = () => {
     navigate(-1);
   };
 
   const handleSave = () => {
-    if (!id) {
+    if (id == null) {
       return window.app.stream
         .add({ type: 'twitch', label, channel })
         .then(() => {
@@ -57,14 +61,16 @@ const WindowModal: React.FC = () => {
   return (
     <Modal open={!!window} size="md" onClose={handleCancel} disableAutoFocus>
       <ModalHeader
-        title={id ? `Edit Window "${windowSettings.label}"` : 'Add Window'}
+        title={
+          id === null ? 'Add Window' : `Edit Window "${windowSettings.label}"`
+        }
       />
       <ModalContent>
         <FormField label="Window Label" error={errors.id}>
           <Input value={label} onChange={setLabel} autoFocus />
         </FormField>
         <FormField label="Twitch Channel" error={errors.channel}>
-          <Input value={channel} onChange={setChannel} />
+          <Input value={channel} onChange={handleChannelChange} />
         </FormField>
       </ModalContent>
       <ModalActions>
@@ -73,7 +79,7 @@ const WindowModal: React.FC = () => {
         </Button>
         <ModalActionsSeparator />
         <StateButton intent="success" onClick={handleSave}>
-          {id ? 'Update Window' : 'Add Window'}
+          {id === null ? 'Add Window' : 'Update Window'}
         </StateButton>
       </ModalActions>
     </Modal>

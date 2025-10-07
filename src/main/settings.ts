@@ -54,7 +54,11 @@ export function addToPlaylist(
   type: ChannelPlaylistType,
   entry: string,
 ) {
-  const entries = entry.trim().split(/[\s,]/).filter(Boolean);
+  const entries = entry
+    .trim()
+    .split(/[\s,]/)
+    .map((e) => e.toLowerCase())
+    .filter(Boolean);
   const settings = getSettings();
   const newList = settings.playlists.find(
     (p) => p.label === label && p.type === type,
