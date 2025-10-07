@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import classnames from 'classnames/bind';
 import {
   Divider,
+  Dot,
   Menu,
   MenuItem,
   MenuItemCheckbox,
@@ -14,6 +15,8 @@ import { StreamWindow } from 'main/types';
 import { NavLink } from 'react-router-dom';
 
 import { useSettings } from 'renderer/contexts/Settings';
+import { useApiTwitch } from 'renderer/contexts/ApiTwitch';
+
 import styles from './Home.module.scss';
 
 const cx = classnames.bind(styles);
@@ -25,6 +28,7 @@ type Props = {
 
 const StreamMenu: React.FC<Props> = ({ trigger, windowSettings }) => {
   const { settings } = useSettings();
+  const { channels } = useApiTwitch();
 
   const switchChannels = useMemo(() => {
     return settings.windows
@@ -109,10 +113,16 @@ const StreamMenu: React.FC<Props> = ({ trigger, windowSettings }) => {
               <TreeViewItem key={`${p.label}_${p.type}`} title={p.label}>
                 {p.entries.map((e) => (
                   <TreeViewItem
+                    className={cx('playlistEntry')}
                     key={e}
                     as={MenuItem}
                     title={e}
                     onClick={() => setChannel(e)}
+                    left={
+                      channels && channels[e] && channels[e].stream ? (
+                        <Dot intent="success" active />
+                      ) : null
+                    }
                   />
                 ))}
               </TreeViewItem>

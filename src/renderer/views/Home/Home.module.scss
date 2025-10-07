@@ -86,6 +86,13 @@
 }
 
 .playlists {
-  width: $container-xs;
-  max-height: calc(80vh);
+  width: $container-sm;
+  max-height: calc(50vh);
+}
+
+.playlistEntry {
+  // FIXME: bug fix for issue with snapping in TreeView
+  scroll-snap-type: none;
+  scroll-margin-top: none;
+  scroll-snap-align: none;
 }

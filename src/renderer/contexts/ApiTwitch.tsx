@@ -19,12 +19,15 @@ const CLIENT_ID = '047jczcyedth9awq0kcnv6m04175iy';
 
 export type MappedChannels = Record<
   string,
-  { user: HelixUser; stream?: HelixStream }
+  { user?: HelixUser; stream?: HelixStream | null }
 >;
 
 interface ApiTwitchContextInterface {
-  getChannels: (channels: string[]) => Promise<MappedChannels>;
+  getChannels: (channels: string[]) => Promise<HelixUser[]>;
+  getChannelStreams: (channels: string[]) => Promise<HelixStream[]>;
   getAuthenticatedUser: () => Promise<HelixPrivilegedUser | null>;
+  channels: MappedChannels;
+  lastRefresh: number;
 }
 
 const ApiTwitchContext = React.createContext<ApiTwitchContextInterface | null>(
@@ -38,28 +41,62 @@ type Props = {
 const ApiTwitchProvider: React.FC<Props> = ({ children }) => {
   const { settings } = useSettings();
   const [apiClient, setApiClient] = useState<ApiClient | null>(null);
+  const [channels, setChannels] = useState<MappedChannels>({});
+  const [lastRefresh, setLastRefresh] = useState<number>(Date.now());
+
+  // local cache for refreshing channels streams without object reference changing issues
+  const channelIdsList = useMemo(
+    () => Object.keys(channels).join(','),
+    [channels],
+  );
 
   const getChannels = useCallback(
-    async (channels: string[]) => {
+    async (ids: string[]) => {
       if (apiClient) {
-        const users = await apiClient.users.getUsersByNames(channels);
-        const streams = await apiClient.streams.getStreamsByUserNames(channels);
+        const users = await apiClient.users.getUsersByNames(ids);
+        setChannels((mapped) =>
+          users.reduce(
+            (acc, u) => {
+              acc[u.name] = acc[u.name] ? { ...acc[u.name] } : {};
+              acc[u.name].user = u;
+              return acc;
+            },
+            { ...mapped },
+          ),
+        );
 
-        const mapped: MappedChannels = {};
-
-        users.reduce((acc, u) => {
-          acc[u.name] = { user: u };
-          return acc;
-        }, mapped);
-
-        streams.reduce((acc, s) => {
-          acc[s.userName].stream = s;
-          return acc;
-        }, mapped);
-
-        return mapped;
+        return users;
       }
-      return {};
+      return [];
+    },
+    [apiClient],
+  );
+
+  const getChannelStreams = useCallback(
+    async (ids: string[]) => {
+      if (apiClient) {
+        const streams = await apiClient.streams.getStreamsByUserNames(ids);
+        setChannels((mapped) => {
+          const mappedNew = ids.reduce(
+            (acc, s) => {
+              if (acc[s]) {
+                acc[s].stream = null;
+              }
+              return acc;
+            },
+            { ...mapped },
+          );
+
+          return streams.reduce((acc, s) => {
+            acc[s.userName] = acc[s.userName] ?? {};
+            acc[s.userName].stream = s;
+            return acc;
+          }, mappedNew);
+        });
+
+        return streams;
+      }
+      return [];
     },
     [apiClient],
   );
@@ -84,15 +121,70 @@ const ApiTwitchProvider: React.FC<Props> = ({ children }) => {
           .getFollowedChannelsPaginated(userId)
           .getAll();
 
-        const channels = followed.map((f) => f.broadcasterName);
+        const c = followed.map((f) => f.broadcasterName);
 
-        channels.sort();
+        c.sort();
 
-        window.app.playlists.update('followed', 'twitch', channels);
+        window.app.playlists.update('followed', 'twitch', c);
       }
     }
     return null;
   }, [apiClient]);
+
+  useEffect(() => {
+    async function refreshChannels() {
+      if (settings.windows) {
+        const windowedChannels = settings.windows
+          .map((w) => w.type === 'twitch' && w.channel)
+          .filter((u) => typeof u === 'string');
+
+        const favoriteChannels = settings.playlists
+          .map((w) => w.type === 'twitch' && w.entries)
+          .reduce(
+            (acc: string[], entries) =>
+              acc && entries ? acc.concat(entries) : acc,
+            [],
+          );
+
+        const userNames = [
+          ...new Set(windowedChannels.concat(favoriteChannels)),
+        ];
+
+        for (let i = 0; i < userNames.length; i += 100) {
+          const ids = userNames.slice(i, i + 100);
+
+          // eslint-disable-next-line no-await-in-loop
+          await getChannels(ids);
+        }
+      }
+    }
+
+    refreshChannels();
+  }, [getChannels, settings.windows, settings.playlists]);
+
+  useEffect(() => {
+    async function refreshChannelsStreams() {
+      if (!channelIdsList) return;
+
+      const channelsIds = channelIdsList.split(',');
+
+      for (let i = 0; i < channelsIds.length; i += 100) {
+        const ids = channelsIds.slice(i, i + 100);
+
+        // eslint-disable-next-line no-await-in-loop
+        await getChannelStreams(ids);
+      }
+
+      setLastRefresh(Date.now());
+    }
+
+    const interval = setInterval(refreshChannelsStreams, 60 * 1000);
+
+    refreshChannelsStreams();
+    return () => {
+      clearInterval(interval);
+    };
+  }, [getChannelStreams, channelIdsList]);
 
   useEffect(() => {
     if (apiClient) {
@@ -116,9 +208,18 @@ const ApiTwitchProvider: React.FC<Props> = ({ children }) => {
   const value = useMemo(
     () => ({
       getChannels,
+      getChannelStreams,
       getAuthenticatedUser,
+      channels,
+      lastRefresh,
     }),
-    [getChannels, getAuthenticatedUser],
+    [
+      getChannels,
+      getChannelStreams,
+      getAuthenticatedUser,
+      channels,
+      lastRefresh,
+    ],
   );
 
   return (
