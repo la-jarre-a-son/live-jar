@@ -14,7 +14,7 @@ const cx = classnames.bind(styles);
 const INACTIVE_TIMEOUT = 4000;
 
 export default function Stream() {
-  const inactiveTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const inactiveTimeout = useRef<ReturnType<typeof setTimeout>>(null);
 
   const { windowId, windowState, toggleMaximize, setState } = useWindowState();
   const { settings } = useSettings();
@@ -60,6 +60,16 @@ export default function Stream() {
       document.removeEventListener('mousemove', handleActive);
     };
   }, [handleActive]);
+
+  useEffect(() => {
+    if (windowSettings) {
+      document.title = `[${windowSettings.label}] ${
+        windowSettings.type === 'twitch'
+          ? windowSettings.channel
+          : new URL(windowSettings.url).hostname
+      } - Live Jar`;
+    }
+  }, [windowSettings]);
 
   return (
     <div className={cx('base')}>

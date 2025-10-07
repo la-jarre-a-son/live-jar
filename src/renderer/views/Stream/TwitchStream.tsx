@@ -34,7 +34,7 @@ const TwitchStream: React.FC<Props> = ({
 }) => {
   const { latencyHighThreshold, setLatency, setFps } = useStreamStats();
   const lastLatencies = useRef<number[]>([]);
-  const embed = useRef<Twitch.Embed>();
+  const embed = useRef<Twitch.Embed>(null);
 
   const handleDoubleClick = useEvent(
     (event: { targetId: string; targetClassName: string }) => {
