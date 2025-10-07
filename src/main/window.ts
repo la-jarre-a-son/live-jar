@@ -257,6 +257,7 @@ const createWindow = async (id: number) => {
     icon: getAssetPath('icon.png'),
     frame: false,
     webPreferences: {
+      backgroundThrottling: false,
       nodeIntegration: false,
       nodeIntegrationInSubFrames: true,
       autoplayPolicy: 'no-user-gesture-required',
