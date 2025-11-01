@@ -96,16 +96,22 @@ if (process.isMainFrame) {
   contextBridge.exposeInMainWorld('app', AppApi);
   contextBridge.exposeInMainWorld('os', OsApi);
 } else if (window.parent) {
-  window.addEventListener('wheel', (event: WheelEvent) => {
-    window.parent.postMessage(
-      {
-        eventName: 'wheel',
-        namespace: 'live-jar',
-        params: { deltaX: event.deltaX, deltaY: event.deltaY },
-      },
-      '*',
-    );
-  });
+  window.addEventListener(
+    'wheel',
+    (event: WheelEvent & { wheelDeltaX?: number; wheelDeltaY?: number }) => {
+      window.parent.postMessage(
+        {
+          eventName: 'wheel',
+          namespace: 'live-jar',
+          params: {
+            deltaX: event.wheelDeltaX ?? event.deltaX,
+            deltaY: event.wheelDeltaY ?? event.deltaY,
+          },
+        },
+        '*',
+      );
+    },
+  );
   window.addEventListener('mousemove', () => {
     window.parent.postMessage(
       { eventName: 'mousemove', namespace: 'live-jar' },

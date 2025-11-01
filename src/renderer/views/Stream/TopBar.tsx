@@ -141,7 +141,8 @@ const TopBar: React.FC<Props> = ({ topbarStyle, windowSettings }) => {
           <Icon name="fi fi-rr-refresh" />
         </Button>
       </ButtonGroup>
-      {window.os?.isWindows && !windowState.locked && (
+      {/* IGNORE MAC OS UI SPECS {window.os?.isWindows && !windowState.locked && ( */}
+      {!windowState.locked && (
         <TrafficLightButtons
           className={cx('trafficLights')}
           windowId={windowSettings.id}
