@@ -14,21 +14,23 @@ export type StreamWindowState = WindowState & {
   ignoreSolo: boolean;
 };
 
-export type BaseStreamWindow = {
+export type TwitchStreamWindow = {
   id: number;
   label: string;
   state: StreamWindowState | null;
-  url?: string;
   quality: string;
   volume: number;
-};
-
-export type TwitchStreamWindow = BaseStreamWindow & {
   type: 'twitch';
   channel: string;
+  url: string;
 };
 
-export type IframeStreamWindow = BaseStreamWindow & {
+export type IframeStreamWindow = {
+  id: number;
+  label: string;
+  state: StreamWindowState | null;
+  quality: string;
+  volume: number;
   type: 'iframe';
   url: string;
 };

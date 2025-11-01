@@ -7,11 +7,42 @@ import { v1_0_0_Settings, v1_0_1_Settings } from './legacy-types';
 const migrations: Migrations<StoreType> = {
   '1.0.0': (store: Conf<StoreType>) => {
     store.set('version', '1.0.0');
+
+    store.set('settings', {
+      auth: {
+        twitch: null,
+      },
+      general: {
+        reopenWindows: true,
+        topbarStyle: 'hidden',
+        volumeScrollSpeed: 0.1,
+        latencyHighThreshold: 7.0,
+        mutePrerollTimeout: 15.0,
+        autoRefreshHighLatency: false,
+        doubleClickAction: 'solo',
+      },
+      windows: [],
+      playlists: [{ label: 'recent', type: 'twitch', entries: [] }],
+      windowState: {
+        x: undefined,
+        y: undefined,
+        width: 800,
+        height: 600,
+        maximized: false,
+        alwaysOnTop: false,
+      },
+      appState: {
+        changelogDismissed: null,
+        updateDismissed: null,
+      },
+    });
   },
   '1.0.1': (store: Conf<StoreType>) => {
     store.set('version', '1.0.1');
 
     const settings = store.get('settings') as unknown as v1_0_0_Settings;
+
+    console.log(settings);
 
     const newSettings: v1_0_1_Settings = {
       ...settings,
