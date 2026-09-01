@@ -504,13 +504,13 @@ export const loginTwitch = () => {
   const CLIENT_ID = '047jczcyedth9awq0kcnv6m04175iy';
   const scopes = ['user:read:follows', 'user:read:subscriptions'].join(' ');
   const redirectUri = 'https://live-jar.ljas.fr/auth/twitch';
-  loginWindow.loadURL(
+  const loginUrl =
     `https://id.twitch.tv/oauth2/authorize?client_id=${
       CLIENT_ID
     }&scope=${encodeURIComponent(
       scopes,
-    )}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`,
-  );
+    )}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`
+  loginWindow.loadURL(loginUrl);
 
   loginWindow.on('ready-to-show', () => {
     if (!loginWindow) {
@@ -520,14 +520,17 @@ export const loginTwitch = () => {
     loginWindow.show();
   });
 
-  loginWindow.webContents.on('will-navigate', (_event, newUrl) => {
+  const checkToken = (_event: unknown, newUrl: string) => {
     if (newUrl.startsWith(redirectUri)) {
       const token = extractAccessToken(newUrl);
       setAuthToken('twitch', token);
       // More complex code to handle tokens goes here
       loginWindow.close();
     }
-  });
+  };
+
+  loginWindow.webContents.on('will-navigate', checkToken);
+  loginWindow.webContents.on('will-redirect', checkToken);
 
   loginWindow.setMenu(null);
 };
