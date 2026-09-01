@@ -504,12 +504,12 @@ export const loginTwitch = () => {
   const CLIENT_ID = '047jczcyedth9awq0kcnv6m04175iy';
   const scopes = ['user:read:follows', 'user:read:subscriptions'].join(' ');
   const redirectUri = 'https://live-jar.ljas.fr/auth/twitch';
-  const loginUrl =
-    `https://id.twitch.tv/oauth2/authorize?client_id=${
-      CLIENT_ID
-    }&scope=${encodeURIComponent(
-      scopes,
-    )}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`
+  const loginUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${
+    CLIENT_ID
+  }&scope=${encodeURIComponent(
+    scopes,
+  )}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`;
+
   loginWindow.loadURL(loginUrl);
 
   loginWindow.on('ready-to-show', () => {
