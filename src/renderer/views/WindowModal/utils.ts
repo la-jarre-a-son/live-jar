@@ -8,70 +8,44 @@ export class FieldError extends Error {
 }
 
 export const fields = {
-  chordNotation: {
+  quality: {
     choices: [
       {
-        value: 'long',
-        label: 'Long (min, maj, dom, aug, dim...)',
+        value: 'auto',
+        label: 'Automatic',
       },
       {
-        value: 'short',
-        label: 'Short (m, M, aug, dim...)',
+        value: 'chunked',
+        label: 'Source',
       },
       {
-        value: 'symbol',
-        label: 'Symbol (-, Δ, +, °...)',
+        value: '1080p60',
+        label: '1080p60',
       },
       {
-        value: 'preferred',
-        label: 'Preferred (in dictionary)',
+        value: '1080p30',
+        label: '1080p30',
+      },
+      {
+        value: '720p60',
+        label: '720p60',
+      },
+      {
+        value: '720p30',
+        label: '720p30',
+      },
+      {
+        value: '480p30',
+        label: '480p30',
+      },
+      {
+        value: '360p30',
+        label: '360p30',
+      },
+      {
+        value: '160p30',
+        label: '160p30',
       },
     ],
   },
-  keyboard: {
-    skin: {
-      choices: [
-        {
-          value: 'classic',
-          label: 'Classic',
-        },
-        {
-          value: 'flat',
-          label: 'Flat',
-        },
-      ],
-    },
-    keyName: {
-      choices: [
-        { value: 'none', label: 'None' },
-        { value: 'octave', label: 'Only C' },
-        { value: 'pitchClass', label: 'Pitch Class' },
-        { value: 'note', label: 'Note' },
-      ],
-    },
-    keyInfo: {
-      choices: [
-        { value: 'none', label: 'None' },
-        { value: 'tonic', label: 'Tonic Dot' },
-        { value: 'interval', label: 'Chord Intervals' },
-        { value: 'tonicAndInterval', label: 'Tonic Dot + Intervals' },
-      ],
-    },
-    label: {
-      choices: [
-        { value: 'none', label: 'None' },
-        { value: 'pitchClass', label: 'Pitch Class' },
-        { value: 'note', label: 'Note' },
-        { value: 'chordNote', label: 'Note in Chord' },
-        { value: 'interval', label: 'Interval' },
-      ],
-    },
-  },
-};
-
-export const transformId = (name: string) => {
-  return name
-    .replace(/[^a-zA-Z0-9-_]/g, '-')
-    .replace(/-+/g, '-')
-    .toLowerCase();
 };

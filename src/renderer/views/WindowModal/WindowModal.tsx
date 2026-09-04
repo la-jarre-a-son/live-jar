@@ -10,10 +10,11 @@ import {
   ModalActionsSeparator,
   Input,
   StateButton,
+  Select,
 } from '@la-jarre-a-son/ui';
 
 import { useWindow } from 'renderer/contexts/Settings';
-import { FieldError } from './utils';
+import { fields, FieldError } from './utils';
 
 const WindowModal: React.FC = () => {
   const { id: paramId } = useParams();
@@ -26,6 +27,9 @@ const WindowModal: React.FC = () => {
   const [label, setLabel] = useState<string>(windowSettings?.label ?? '');
   const [channel, setChannel] = useState<string>(
     windowSettings?.type === 'twitch' ? (windowSettings?.channel ?? '') : '',
+  );
+  const [quality, setQuality] = useState<string>(
+    windowSettings?.quality ?? 'auto',
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -40,7 +44,7 @@ const WindowModal: React.FC = () => {
   const handleSave = () => {
     if (id == null) {
       return window.app.stream
-        .add({ type: 'twitch', label, channel })
+        .add({ type: 'twitch', label, channel, quality })
         .then(() => {
           return navigate('/');
         })
@@ -49,7 +53,7 @@ const WindowModal: React.FC = () => {
         );
     }
     return window.app.stream
-      .update(id, { label, channel })
+      .update(id, { label, channel, quality })
       .then(() => {
         return navigate('/');
       })
@@ -71,6 +75,13 @@ const WindowModal: React.FC = () => {
         </FormField>
         <FormField label="Twitch Channel" error={errors.channel}>
           <Input value={channel} onChange={handleChannelChange} />
+        </FormField>
+        <FormField label="Quality" error={errors.channel}>
+          <Select
+            options={fields.quality.choices}
+            onChange={(value) => setQuality(value)}
+            value={quality}
+          />
         </FormField>
       </ModalContent>
       <ModalActions>
