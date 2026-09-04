@@ -20,7 +20,11 @@ type Props = {
   autoRefreshHighLatency?: boolean;
   onStreamUpdate: (streamWindow: Partial<TwitchStreamWindow>) => void;
   onActive: () => void;
-  onDoubleClick: () => void;
+  onDoubleClick: (options: {
+    altKey: boolean;
+    ctrlKey: boolean;
+    shiftKey: boolean;
+  }) => void;
 };
 
 const TwitchStream: React.FC<Props> = ({
@@ -37,10 +41,20 @@ const TwitchStream: React.FC<Props> = ({
   const embed = useRef<Twitch.Embed>(null);
 
   const handleDoubleClick = useEvent(
-    (event: { targetId: string; targetClassName: string }) => {
+    (event: {
+      targetId: string;
+      targetClassName: string;
+      altKey: boolean;
+      ctrlKey: boolean;
+      shiftKey: boolean;
+    }) => {
       // Avoids trigger double click on controls.
       if (event.targetClassName.includes('click-handler')) {
-        onDoubleClick();
+        onDoubleClick({
+          altKey: !!event.altKey,
+          ctrlKey: !!event.ctrlKey,
+          shiftKey: !!event.shiftKey,
+        });
       }
     },
   );

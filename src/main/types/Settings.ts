@@ -50,7 +50,35 @@ export type GeneralSettings = {
   latencyHighThreshold: number;
   mutePrerollTimeout: number;
   autoRefreshHighLatency: boolean;
-  doubleClickAction: 'none' | 'maximize' | 'solo' | 'mute';
+  doubleClickAction:
+    | 'none'
+    | 'maximize'
+    | 'solo'
+    | 'mute'
+    | 'reload'
+    | 'switchWithMain';
+  doubleClickShiftAction:
+    | 'none'
+    | 'maximize'
+    | 'solo'
+    | 'mute'
+    | 'reload'
+    | 'switchWithMain';
+  doubleClickCtrlAction:
+    | 'none'
+    | 'maximize'
+    | 'solo'
+    | 'mute'
+    | 'reload'
+    | 'switchWithMain';
+  doubleClickAltAction:
+    | 'none'
+    | 'maximize'
+    | 'solo'
+    | 'mute'
+    | 'reload'
+    | 'switchWithMain';
+  homeOpenAction: 'open' | 'toggle' | 'solo' | 'switchWithMain';
 };
 
 export type AuthToken = {

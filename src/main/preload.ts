@@ -54,6 +54,8 @@ export const AppApi = {
     delete: (id: number) => ipcRenderer.send('app:stream:delete', id),
     switch: (id: number, targetId: number) =>
       ipcRenderer.send('app:stream:switch', id, targetId),
+    switchWithMain: (id: number) =>
+      ipcRenderer.send('app:stream:switchWithMain', id),
   },
   playlists: {
     list: () => ipcRenderer.invoke('app:playlist:list'),
@@ -77,6 +79,7 @@ export const AppApi = {
     titleBarDoubleClick: () =>
       ipcRenderer.send('app:window:titleBarDoubleClick'),
     solo: (id: number) => ipcRenderer.send('app:window:solo', id),
+    reload: (id: number) => ipcRenderer.send('app:window:reload', id),
     getState: (id: number | null) =>
       ipcRenderer.send('app:window:getState', id),
     setState: (id: number | null, state: Partial<StreamWindowState>) =>
@@ -112,7 +115,7 @@ if (process.isMainFrame) {
       '*',
     );
   });
-  window.addEventListener('dblclick', (event) => {
+  window.addEventListener('dblclick', (event: MouseEvent) => {
     window.parent.postMessage(
       {
         eventName: 'dblclick',
@@ -120,6 +123,9 @@ if (process.isMainFrame) {
         params: {
           targetId: (event.target as HTMLElement).id,
           targetClassName: (event.target as HTMLElement).className,
+          altKey: event.altKey,
+          ctrlKey: event.ctrlKey,
+          shiftKey: event.shiftKey,
         },
       },
       '*',

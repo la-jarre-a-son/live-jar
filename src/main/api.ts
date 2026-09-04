@@ -39,6 +39,7 @@ import {
   removeStream,
   getChildWindow,
   switchStreams,
+  switchStreamWithMain,
   getOpenWindowIds,
 } from './window';
 import { checkUpdates, dismissChangelog, dismissUpdate } from './appState';
@@ -112,6 +113,13 @@ ipcMain.on('app:window:titleBarDoubleClick', (event) => {
         window.unmaximize();
       }
     }
+  }
+});
+
+ipcMain.on('app:window:reload', (event, id: number) => {
+  const window = getChildWindow(id);
+  if (window) {
+    window.reload();
   }
 });
 
@@ -205,6 +213,10 @@ ipcMain.on('app:stream:delete', (_event, id: number) => {
 
 ipcMain.on('app:stream:switch', (_event, id: number, targetId: number) => {
   return switchStreams(id, targetId);
+});
+
+ipcMain.on('app:stream:switchWithMain', (_event, id: number) => {
+  return switchStreamWithMain(id);
 });
 
 ipcMain.on('app:login', (_event) => {

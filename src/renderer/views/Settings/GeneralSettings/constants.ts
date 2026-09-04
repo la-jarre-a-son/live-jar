@@ -1,4 +1,24 @@
 export const fields = {
+  homeOpenAction: {
+    choices: [
+      {
+        value: 'open',
+        label: 'Focus Window',
+      },
+      {
+        value: 'toggle',
+        label: 'Toggle Open/Close',
+      },
+      {
+        value: 'solo',
+        label: 'Solo',
+      },
+      {
+        value: 'switchWithMain',
+        label: 'Switch with Main',
+      },
+    ],
+  },
   topbarStyle: {
     choices: [
       {
@@ -32,6 +52,14 @@ export const fields = {
       {
         value: 'solo',
         label: 'Solo',
+      },
+      {
+        value: 'reload',
+        label: 'Reload',
+      },
+      {
+        value: 'switchWithMain',
+        label: 'Switch with Main',
       },
     ],
   },

@@ -20,8 +20,8 @@
   radial-gradient(at 38.35470085470086% 38.47643432863171%,
   #4E3F66 0px,
   transparent 50%) #413960;
-  backdrop-filter: blur(40px) contrast(100%) brightness(100%);
-  -webkit-backdrop-filter: blur(40px) contrast(100%) brightness(100%);
+  // backdrop-filter: blur(40px) contrast(100%) brightness(100%);
+  // -webkit-backdrop-filter: blur(40px) contrast(100%) brightness(100%);
 }
 
 .container {
@@ -37,9 +37,11 @@
 .window {
   --Card-thumbnail_aspectRatio: 16/9;
   --Card-thumbnail_padding: #{$space-md};
+  opacity: 0.6;
 
   &.--enabled {
-    .channelName,
+    opacity: 1;
+    .channelName img,
     .windowThumbnailImage {
       opacity: 1.0;
       filter: none;
@@ -48,7 +50,6 @@
     .windowLabel {
       opacity: 1.0
     }
-
   }
 }
 
@@ -66,7 +67,8 @@
   --Card-thumbnail_padding: 0;
   background: rgba($color-black, 0.5);
   padding: $space-sm;
-  line-height: 1em;
+  height: fit-content;
+  white-space: normal;
   text-align: center;
   left: 0;
   right: 0;

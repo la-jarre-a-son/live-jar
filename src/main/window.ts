@@ -87,6 +87,13 @@ export function getWindow(id: number): StreamWindow | undefined {
   return window;
 }
 
+export function getWindowByLabel(label: string): StreamWindow | undefined {
+  const windows = getWindows();
+  const window = windows.find((w: StreamWindow) => w.label === label);
+
+  return window;
+}
+
 export function updateWindow(id: number, data: Partial<StreamWindow>): void {
   const windows = getWindows();
   const window = windows.find((w: StreamWindow) => w.id === id);
@@ -459,11 +466,13 @@ export function switchStreams(id: number, targetId: number) {
     ...currentWindow,
     label: targetWindow.label,
     state: targetWindow.state,
+    quality: targetWindow.quality,
   };
   const newTargetWindow = {
     ...targetWindow,
     label: currentWindow.label,
     state: currentWindow.state,
+    quality: currentWindow.quality,
   };
   const windows = getWindows().map((w) =>
     w.id === id ? newTargetWindow : w.id === targetId ? newCurrentWindow : w,
@@ -472,6 +481,15 @@ export function switchStreams(id: number, targetId: number) {
 
   applyState(id, targetWindow.state);
   applyState(targetId, currentWindow.state);
+}
+
+export function switchStreamWithMain(id: number) {
+  const currentWindow = getWindow(id);
+  const targetWindow = getWindowByLabel('main');
+
+  if (!currentWindow?.state?.enabled || !targetWindow?.state?.enabled) return;
+
+  switchStreams(currentWindow.id, targetWindow.id);
 }
 
 // export const loginTwitch = () => {

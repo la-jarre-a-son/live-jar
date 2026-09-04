@@ -1,6 +1,5 @@
 import classnames from 'classnames/bind';
-import { useState } from 'react';
-import Marquee from 'react-fast-marquee';
+import { useCallback } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import {
@@ -12,10 +11,9 @@ import {
   CardThumbnailOverlay,
   CardThumbnailItem,
   CardHeader,
-  Container,
   Icon,
   Grid,
-  Stack,
+  ButtonGroup,
 } from '@la-jarre-a-son/ui';
 
 import { NavButton } from 'renderer/components';
@@ -23,6 +21,7 @@ import { NavButton } from 'renderer/components';
 import { useApiTwitch } from 'renderer/contexts/ApiTwitch';
 import { useSettings } from 'renderer/contexts/Settings';
 
+import { StreamWindow } from 'main/types';
 import StreamMenu from './StreamMenu';
 
 import styles from './Home.module.scss';
@@ -31,25 +30,41 @@ const cx = classnames.bind(styles);
 
 export function Home() {
   const { settings } = useSettings();
-  const [cardHover, setCardHover] = useState<number | null>(null);
   const { channels, lastRefresh } = useApiTwitch();
+  const handleClick = useCallback(
+    (w: StreamWindow) => {
+      const action = settings.general.homeOpenAction;
 
-  const openStream = (id: number) => {
-    window.app.window.open(id);
-  };
+      if (w.state?.enabled) {
+        if (action === 'open') {
+          window.app.window.open(w.id);
+        }
+        if (action === 'toggle') {
+          window.app.window.close(w.id);
+        }
+        if (action === 'solo') {
+          window.app.window.solo(w.id);
+        }
+        if (action === 'switchWithMain') {
+          window.app.stream.switchWithMain(w.id);
+        }
+      } else {
+        window.app.window.open(w.id);
+      }
+    },
+    [settings.general.homeOpenAction],
+  );
 
   return (
     <div className={cx('base')}>
-      <Container size="xl" className={cx('container')}>
-        <Grid size="md" gap="lg">
+      <div className={cx('container')}>
+        <Grid size="lg" gap="lg">
           {settings.windows.map((w) => (
             <Card
               key={`${w.id}`}
               className={cx('window', { '--enabled': w.state?.enabled })}
               outlined
               elevation={w.state?.enabled ? 3 : 2}
-              onMouseEnter={() => setCardHover(w.id)}
-              onMouseLeave={() => setCardHover(null)}
             >
               {w.type === 'twitch' && (
                 <CardThumbnail
@@ -67,7 +82,7 @@ export function Home() {
                 >
                   <CardThumbnailOverlay
                     as="button"
-                    onClick={() => openStream(w.id)}
+                    onClick={() => handleClick(w)}
                     interactive
                   />
                   <CardThumbnailItem
@@ -115,20 +130,30 @@ export function Home() {
                       <Icon name="fi fi-rr-comments" />
                     </NavButton>
                   </CardThumbnailItem>
+                  <CardThumbnailItem position="top-right">
+                    <NavButton
+                      aria-label="chat"
+                      icon
+                      variant="ghost"
+                      intent="neutral"
+                      to={`/chat/${w.channel}`}
+                    >
+                      <Icon name="fi fi-rr-comments" />
+                    </NavButton>
+                  </CardThumbnailItem>
                   {w.channel && channels[w.channel] ? (
                     <CardThumbnailItem
                       className={cx('streamStatus')}
                       position="bottom-left"
                     >
                       {channels[w.channel].stream ? (
-                        <Marquee play={cardHover === w.id} speed={45} autoFill>
-                          <Stack gap="sm" className={cx('streamTitle')}>
-                            <Badge intent="error" size="sm">
-                              LIVE
-                            </Badge>
-                            <span>{channels[w.channel].stream?.title}</span>
-                          </Stack>
-                        </Marquee>
+                        <span>
+                          <Badge intent="error" size="sm">
+                            LIVE
+                          </Badge>
+                          &nbsp;
+                          {channels[w.channel].stream?.title}
+                        </span>
                       ) : (
                         'Stream Offline'
                       )}
@@ -139,19 +164,40 @@ export function Home() {
 
               <CardHeader
                 right={
-                  <StreamMenu
-                    trigger={
-                      <Button
-                        aria-label="more"
-                        icon
-                        variant="ghost"
-                        intent="neutral"
-                      >
-                        <Icon name="fi fi-rr-menu-dots" />
-                      </Button>
-                    }
-                    windowSettings={w}
-                  />
+                  <ButtonGroup>
+                    <Button
+                      aria-label="solo"
+                      icon
+                      intent="success"
+                      hoverIntent
+                      onClick={() => window.app.window.solo(w.id)}
+                    >
+                      <Icon name="fi fi-rr-megaphone" />
+                    </Button>
+                    <Button
+                      aria-label="switch with main"
+                      icon
+                      intent="warning"
+                      hoverIntent
+                      onClick={() => window.app.stream.switchWithMain(w.id)}
+                    >
+                      <Icon name="fi fi-rr-arrow-square-up" />
+                    </Button>
+
+                    <StreamMenu
+                      trigger={
+                        <Button
+                          aria-label="more"
+                          icon
+                          variant="ghost"
+                          intent="neutral"
+                        >
+                          <Icon name="fi fi-rr-menu-dots" />
+                        </Button>
+                      }
+                      windowSettings={w}
+                    />
+                  </ButtonGroup>
                 }
               >
                 <span className={cx('windowLabel')}>{w.label}</span>
@@ -173,8 +219,8 @@ export function Home() {
             <CardHeader>Add window</CardHeader>
           </Card>
         </Grid>
-      </Container>
-      <Outlet />
+        <Outlet />
+      </div>
     </div>
   );
 }

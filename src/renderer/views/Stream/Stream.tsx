@@ -35,23 +35,48 @@ export default function Stream() {
     }, INACTIVE_TIMEOUT);
   }, []);
 
-  const handleDoubleClick = useCallback(() => {
-    if (settings.general.doubleClickAction === 'mute') {
-      setState(windowId, { muted: !windowState.muted });
-    }
-    if (settings.general.doubleClickAction === 'solo') {
-      window.app.window.solo(windowId as number);
-    }
-    if (settings.general.doubleClickAction === 'maximize') {
-      toggleMaximize();
-    }
-  }, [
-    setState,
-    settings.general.doubleClickAction,
-    toggleMaximize,
-    windowId,
-    windowState.muted,
-  ]);
+  const handleDoubleClick = useCallback(
+    ({
+      altKey,
+      shiftKey,
+      ctrlKey,
+    }: {
+      altKey: boolean;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+    }) => {
+      let action = 'none';
+
+      if (shiftKey && !altKey && !ctrlKey) {
+        action = settings.general.doubleClickShiftAction;
+      } else if (altKey && !shiftKey && !ctrlKey) {
+        action = settings.general.doubleClickAltAction;
+      } else if (ctrlKey && !shiftKey && !altKey) {
+        action = settings.general.doubleClickCtrlAction;
+      } else if (!shiftKey && !altKey && !ctrlKey) {
+        action = settings.general.doubleClickAction;
+      }
+
+      if (windowId) {
+        if (action === 'mute') {
+          setState(windowId, { muted: !windowState.muted });
+        }
+        if (action === 'solo') {
+          window.app.window.solo(windowId as number);
+        }
+        if (action === 'maximize') {
+          toggleMaximize();
+        }
+        if (action === 'reload') {
+          window.location.reload();
+        }
+        if (action === 'switchWithMain') {
+          window.app.stream.switchWithMain(windowId);
+        }
+      }
+    },
+    [setState, settings.general, toggleMaximize, windowId, windowState.muted],
+  );
 
   useEffect(() => {
     handleActive();

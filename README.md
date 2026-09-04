@@ -51,6 +51,11 @@ npm run start
 npm run package
 ```
 
+### Tips
+
+Create all the windows, name them semantically (like top-left, A, B, C, D or main, second, third) place them as you want. You should at least have a window labelled `main` to use the "Switch with main" feature - which allows you to quickly switch a window with your main screen (this window will switch all its setting: placement, quality, solo/mute).
+Then assign a Twitch stream to each window and enjoy a easily switchable multipov experience.
+
 ### Planned features / Ideas
 
 - [x] Multiple stream windows controlled from a main window

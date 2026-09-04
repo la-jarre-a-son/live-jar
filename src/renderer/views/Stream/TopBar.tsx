@@ -108,6 +108,9 @@ const TopBar: React.FC<Props> = ({ topbarStyle, windowSettings }) => {
           <Badge size="sm" intent="neutral">
             {Number(fps).toFixed(0)}fps
           </Badge>
+          <Badge size="sm" intent="warning">
+            {windowSettings.quality}
+          </Badge>
         </div>
         <div
           className={cx('title', {

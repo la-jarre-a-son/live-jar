@@ -117,6 +117,18 @@ const GeneralSettings: React.FC = () => {
         )}
       </FormFieldset>
       <FormFieldset label="Stream Window">
+        <FormField
+          label="Homepage Click Action"
+          hint="Choose the action associated with clicking on a window"
+        >
+          <Select
+            options={fields.homeOpenAction.choices}
+            onChange={(value) => updateSetting('general.homeOpenAction', value)}
+            value={settings.general.homeOpenAction}
+          />
+        </FormField>
+      </FormFieldset>
+      <FormFieldset label="Stream Window">
         <FormField label="Topbar Style">
           <Select
             options={fields.topbarStyle.choices}
@@ -201,6 +213,42 @@ const GeneralSettings: React.FC = () => {
               updateSetting('general.doubleClickAction', value)
             }
             value={settings.general.doubleClickAction}
+          />
+        </FormField>
+        <FormField
+          label="Double-click Shift Action"
+          hint="Choose the action associated with double click + Shift Key"
+        >
+          <Select
+            options={fields.doubleClickAction.choices}
+            onChange={(value) =>
+              updateSetting('general.doubleClickShiftAction', value)
+            }
+            value={settings.general.doubleClickShiftAction}
+          />
+        </FormField>
+        <FormField
+          label="Double-click Ctrl Action"
+          hint="Choose the action associated with double click + Ctrl Key"
+        >
+          <Select
+            options={fields.doubleClickAction.choices}
+            onChange={(value) =>
+              updateSetting('general.doubleClickCtrlAction', value)
+            }
+            value={settings.general.doubleClickCtrlAction}
+          />
+        </FormField>
+        <FormField
+          label="Double-click Alt Action"
+          hint="Choose the action associated with double click + Alt Key"
+        >
+          <Select
+            options={fields.doubleClickAction.choices}
+            onChange={(value) =>
+              updateSetting('general.doubleClickAltAction', value)
+            }
+            value={settings.general.doubleClickAltAction}
           />
         </FormField>
       </FormFieldset>

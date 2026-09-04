@@ -60,6 +60,10 @@ const StreamMenu: React.FC<Props> = ({ trigger, windowSettings }) => {
     window.app.window.solo(windowSettings.id);
   };
 
+  const reload = () => {
+    window.app.window.reload(windowSettings.id);
+  };
+
   const toggleIgnoreSolo = () => {
     window.app.window.setState(windowSettings.id, {
       ignoreSolo: !windowSettings.state?.ignoreSolo,
@@ -89,6 +93,9 @@ const StreamMenu: React.FC<Props> = ({ trigger, windowSettings }) => {
       <MenuItem onClick={openStream}>
         {windowSettings.state?.enabled ? 'Focus Window' : 'Open Window'}
       </MenuItem>
+      {windowSettings.state?.enabled ? (
+        <MenuItem onClick={reload}>Reload</MenuItem>
+      ) : null}
       {windowSettings.state?.enabled ? (
         <MenuItem onClick={closeStream}>Close Window</MenuItem>
       ) : null}
