@@ -112,10 +112,10 @@ exports[`App should render 1`] = `
           class="base"
         >
           <div
-            class="root --xl --center container"
+            class="container"
           >
             <div
-              class="root --gap-lg col--md"
+              class="root --gap-lg col--lg"
             >
               <a
                 class="root --outlined --elevation1 root --interactive --outlined"

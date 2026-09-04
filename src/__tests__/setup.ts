@@ -30,6 +30,7 @@ window.app = {
     update: jest.fn(),
     delete: jest.fn(),
     switch: jest.fn(),
+    switchWithMain: jest.fn(),
   },
   playlists: {
     list: jest.fn(),
@@ -47,6 +48,7 @@ window.app = {
     unmaximize: jest.fn(),
     titleBarDoubleClick: jest.fn(),
     solo: jest.fn(),
+    reload: jest.fn(),
     getState: jest.fn(),
     setState: jest.fn(),
     onStateChange: jest.fn().mockReturnValue(jest.fn()),
